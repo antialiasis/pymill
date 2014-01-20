@@ -281,7 +281,7 @@ class Pymill(object):
         self.session.auth = (privatekey, "")
         self.session.verify = False
 
-    def _api_call(self, url, params=None, method="GET", headers=None, parse_json=True, return_type=None):
+    def _api_call(self, url, params=None, method="GET", force_get=False, headers=None, parse_json=True, return_type=None):
         """Call an API method.
 
         :Parameters:
@@ -295,7 +295,7 @@ class Pymill(object):
         """
         if not params: params = {}
         request = {'GET': self.session.get, 'DELETE': self.session.delete, 'PUT': self.session.put, 'POST': self.session.post}[method]
-        if len(params) > 0 and not method in ('DELETE', 'PUT'):
+        if len(params) > 0 and not method in ('DELETE', 'PUT') and not force_get:
             request = self.session.post
         response = request(url, params=params, headers=headers)
 
@@ -426,7 +426,7 @@ class Pymill(object):
         :Returns:
             a dict with a member "data" which is an array of dicts, each representing a transaction
         """
-        return self._api_call("https://api.paymill.com/v2/transactions/", params=filters, return_type=Transaction)
+        return self._api_call("https://api.paymill.com/v2/transactions/", params=filters, force_get=True, return_type=Transaction)
 
     def refund(self, transaction_id, amount, description=None):
         """Refunds an already performed transaction.
