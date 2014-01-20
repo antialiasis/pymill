@@ -420,13 +420,13 @@ class Pymill(object):
         """
         return self._api_call("https://api.paymill.com/v2/transactions/" + str(transaction_id), return_type=Transaction)
 
-    def get_transactions(self):
+    def get_transactions(self, filters={}):
         """List all transactions.
 
         :Returns:
             a dict with a member "data" which is an array of dicts, each representing a transaction
         """
-        return self._api_call("https://api.paymill.com/v2/transactions/", return_type=Transaction)
+        return self._api_call("https://api.paymill.com/v2/transactions/", params=filters, return_type=Transaction)
 
     def refund(self, transaction_id, amount, description=None):
         """Refunds an already performed transaction.
