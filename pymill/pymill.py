@@ -420,8 +420,11 @@ class Pymill(object):
         """
         return self._api_call("https://api.paymill.com/v2/transactions/" + str(transaction_id), return_type=Transaction)
 
-    def get_transactions(self, filters={}):
+    def get_transactions(self, filters=None):
         """List all transactions.
+
+        :Parameters:
+        - `filters` - filters to limit the returned list to e.g. transactions for only a particular client
 
         :Returns:
             a dict with a member "data" which is an array of dicts, each representing a transaction
