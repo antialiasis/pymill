@@ -621,7 +621,7 @@ class Pymill(object):
         :Returns:
             a dict with a member "data" which is a dict representing an offer
         """
-        return self._api_call("https://api.paymill.com/v2/offers/" + str(offer_id), {'name': str(name)}, return_type=Offer)
+        return self._api_call("https://api.paymill.com/v2/offers/" + str(offer_id), {'name': str(name)}, method="PUT", return_type=Offer)
 
     def delete_offer(self, offer_id):
         """Delete a stored offer. May only be done if no subscriptions to this offer are active.
