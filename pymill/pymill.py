@@ -671,17 +671,18 @@ class Pymill(object):
         """
         return self._api_call("https://api.paymill.com/v2/subscriptions/" + str(subscription_id), return_type=Subscription)
 
-    def update_subscription(self, subscription_id, offer):
-        """Change the offer that a subscription is attached to
+    def update_subscription(self, subscription_id, offer=None, payment=None):
+        """Change the offer or payment method that a subscription is attached to
         
         :Parameters:
          - `subscription_id` - ID of the subscription
          - `offer` - ID of the new offer
+         - `payment` - ID of the new payment information
 
         :Returns:
             a dict with a member "data" which represents the subscription
         """
-        return self._api_call("https://api.paymill.de/v2/subscriptions/" + str(subscription_id), {'offer': str(offer)}, method="PUT", return_type=Subscription)
+        return self._api_call("https://api.paymill.de/v2/subscriptions/" + str(subscription_id), dict_without_none(offer=str(offer), payment=str(payment)), method="PUT", return_type=Subscription)
 
     def cancel_subscription_after_interval(self, subscription_id, cancel=True):
         """Cancels a subscription after its interval ends
